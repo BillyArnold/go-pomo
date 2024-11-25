@@ -4,24 +4,63 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
 	fmt.Println("Welcome to the pomodoro cli application")
 
-	inputVal, err := inputString("Enter your name")
+	pomoSettings := collectSettings()
+
+	cycle(pomoSettings.minutesPerPomo)
+
+	// inputVal, err := inputString("Enter your name")
+	// if err != nil {
+	// 	fmt.Println("there was an input error")
+	// }
+
+	// input, err := inputString("Enter another word")
+	// if err != nil {
+	// 	fmt.Println("there was an input error")
+	// }
+
+	// fmt.Println(inputVal, input)
+
+}
+
+type SettingsObject struct {
+	tasks          []string
+	cycles         int
+	minutesPerPomo int
+}
+
+func collectSettings() *SettingsObject {
+	cyclesInput, err := inputString("How many cycles of focused work would you like?")
 	if err != nil {
-		fmt.Println("there was an input error")
+		fmt.Println("there was an input error", err)
 	}
 
-	input, err := inputString("Enter another word")
+	cyclesInputInt, err := strconv.Atoi(cyclesInput)
 	if err != nil {
-		fmt.Println("there was an input error")
+		fmt.Println("A number was not entered")
 	}
 
-	fmt.Println(inputVal, input)
+	return &SettingsObject{
+		tasks:          []string{"task 1", "task 2"},
+		cycles:         cyclesInputInt,
+		minutesPerPomo: 1,
+	}
+}
 
+func cycle(minutes int) {
+	numberOfSeconds := minutes * 60
+
+	for i := 1; i <= numberOfSeconds; i++ {
+		time.Sleep(time.Millisecond * 1000)
+		fmt.Println(i)
+	}
 }
 
 func inputString(prompt string) (string, error) {
