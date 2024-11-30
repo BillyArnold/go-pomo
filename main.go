@@ -47,10 +47,20 @@ func collectSettings() *SettingsObject {
 		fmt.Println("A number was not entered")
 	}
 
+	minutesInput, err := inputString("How many minutes per cycle should there be?")
+	if err != nil {
+		fmt.Println("there was an input error", err)
+	}
+
+	minutesInputInt, err := strconv.Atoi(minutesInput)
+	if err != nil {
+		fmt.Println("A number was not entered")
+	}
+
 	return &SettingsObject{
 		tasks:          []string{"task 1", "task 2"},
 		cycles:         cyclesInputInt,
-		minutesPerPomo: 1,
+		minutesPerPomo: minutesInputInt,
 	}
 }
 
@@ -58,7 +68,7 @@ func cycle(minutes int) {
 	numberOfSeconds := minutes * 60
 
 	for i := 1; i <= numberOfSeconds; i++ {
-		time.Sleep(time.Millisecond * 1000)
+		time.Sleep(time.Second * 1)
 		fmt.Println(i)
 	}
 }
