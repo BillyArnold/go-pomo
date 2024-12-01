@@ -7,10 +7,15 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gen2brain/beeep"
 )
 
 func main() {
 	fmt.Println("Welcome to the pomodoro cli application")
+	err := beeep.Notify("Title", "Message body", "assets/information.png")
+	if err != nil {
+	}
 
 	pomoSettings := collectSettings()
 
